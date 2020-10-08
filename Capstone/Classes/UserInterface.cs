@@ -16,6 +16,7 @@ namespace Capstone.Classes
         public FileAccess file = new FileAccess();
         public void RunInterface()
         {
+            file.FileReader();
             string menuSelection = "";
             bool done = false;
             while (!done)
@@ -30,7 +31,6 @@ namespace Capstone.Classes
                 switch (menuSelection)
                 {
                     case "1":
-                        file.FileReader();
 
                         break;
 

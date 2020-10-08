@@ -18,6 +18,19 @@ namespace Capstone.Classes
         {
             return filePath;
         }
+        
+
+        public void addToList(CateringItem item)
+        {
+
+            this.items.Add(item);
+        }
+
+        public void printList(int i)
+        {
+            Console.WriteLine(this.items[i].ToString());
+            
+        }
    
     }
     

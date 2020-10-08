@@ -10,15 +10,16 @@ namespace Capstone.Classes
     /// </summary>
     public class FileAccess
     {
+        public Catering catering = new Catering();
         private string filePath = @"C:\Users\Student\Catering\cateringsystem.csv";
         public void FileReader()
         {
             using (StreamReader reader = new StreamReader(filePath))
             {
-                Console.WriteLine("1");
+                int i = 0;
                 while (!reader.EndOfStream)
                 {
-                    Console.WriteLine("2");
+                    
                     string line = reader.ReadLine();
 
                     string[] parts = line.Split("|"); 
@@ -28,10 +29,12 @@ namespace Capstone.Classes
                     decimal price = decimal.Parse(parts[2]);
                     string type = parts[3];
 
-                    //Console.Write("dog");
-                    Console.Write(code);
-                    //InventoryItems inventory = new InventoryItems(code, name, price, type);
-                    //inventory.Add(parts);
+
+                    CateringItem item = new CateringItem(code, name, price, type);
+
+                    catering.addToList(item);
+                    catering.printList(i);
+                    i++;
                 }
             }
         }

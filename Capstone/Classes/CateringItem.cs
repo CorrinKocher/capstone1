@@ -17,18 +17,26 @@ namespace Capstone.Classes
             this.Type = type;
         }
 
-        int Quantity  {get; set;} = 50;
-        string Code { get; set; }
-        string Name { get; set; }
-        decimal Price { get; set; }
-        string Type { get; set; }
-        bool soldOut { get; set; } = false;
+        public int Quantity  {get; set;} = 50;
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string Type { get; set; }
+        public bool soldOut { get; set; } = false;
 
         public override string ToString()
         {
-            return this.Code + "|" + this.Name + "|" + this.Price.ToString() + "|" + this.Type;
+            return this.Code + "|" + this.Name + "|" + this.Price.ToString() + "|" + this.Quantity.ToString() + "|" + this.Type;
         }
-
+        public void UpdateQuantity(int amtSold)
+        {
+            if(Quantity > 0 && amtSold <= Quantity)
+            {
+                Quantity -= amtSold;
+            }
+            
+            //Console.WriteLine(this.Quantity);
+        }
 
     }
 }

@@ -27,9 +27,26 @@ namespace Capstone.Classes
         }
 
         public void printList(int i)
-        {
+        {   //NO CONSOLE WRITELINE HERE!!! 
             Console.WriteLine(this.items[i].ToString());
             
+        }
+        public void printAllList()
+        {
+            foreach  (CateringItem item in items)
+            {
+                //NO CONSOLE WRITELINE HERE!!! 
+                Console.WriteLine(item.ToString());
+            }
+        }
+        public void ModifyQuantity(string itemCode, int qtyToPurchase)
+        {
+            CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
+            //this.items.Find(x => x.Quantity.Subtract(qtyToPurchase));
+            item.UpdateQuantity(qtyToPurchase); //first or default would also work in place of fine
+            //could also foreach. LINQ provides shortcuts foreachs
+
+
         }
    
     }

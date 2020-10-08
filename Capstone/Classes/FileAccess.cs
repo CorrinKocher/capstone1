@@ -10,9 +10,9 @@ namespace Capstone.Classes
     /// </summary>
     public class FileAccess
     {
-        public Catering catering = new Catering();
+        //public Catering catering;
         private string filePath = @"C:\Users\Student\Catering\cateringsystem.csv";
-        public void FileReader()
+        public void FileReader(Catering catering)
         {
             using (StreamReader reader = new StreamReader(filePath))
             {
@@ -33,7 +33,7 @@ namespace Capstone.Classes
                     CateringItem item = new CateringItem(code, name, price, type);
 
                     catering.addToList(item);
-                    catering.printList(i);
+                  //  catering.printList(i);
                     i++;
                 }
             }

@@ -15,8 +15,10 @@ namespace Capstone.Classes
         {
             using (StreamReader reader = new StreamReader(filePath))
             {
+                Console.WriteLine("1");
                 while (!reader.EndOfStream)
                 {
+                    Console.WriteLine("2");
                     string line = reader.ReadLine();
 
                     string[] parts = line.Split("|"); 

@@ -13,9 +13,10 @@ namespace Capstone.Classes
     public class UserInterface
     {
         private Catering catering = new Catering();
-        public FileAccess file;
+        public FileAccess file = new FileAccess();
         public void RunInterface()
         {
+            string menuSelection = "";
             bool done = false;
             while (!done)
             {
@@ -23,14 +24,12 @@ namespace Capstone.Classes
                 Console.WriteLine("(1) Display Catering Items");
                 Console.WriteLine("(2) Order");
                 Console.WriteLine("(3) Quit");
-                Console.ReadLine();
-                string menuSelection = Console.ReadLine();
+
+                menuSelection = Console.ReadLine().ToString();
+
                 switch (menuSelection)
                 {
                     case "1":
-
-
-                        Console.Write("Dog");
                         file.FileReader();
 
                         break;
@@ -45,6 +44,8 @@ namespace Capstone.Classes
 
 
                     default:
+
+                        Console.WriteLine("hi");
                         break;
                 }
             }

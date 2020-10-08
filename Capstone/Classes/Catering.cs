@@ -12,6 +12,13 @@ namespace Capstone.Classes
         private List<CateringItem> items = new List<CateringItem>();
 
         private string filePath = @"C:\Catering"; // You will likely need to create this folder on your machine
+
+      
+        public string GetFilePath()
+        {
+            return filePath;
+        }
    
     }
+    
 }

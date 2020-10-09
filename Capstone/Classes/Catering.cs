@@ -14,6 +14,7 @@ namespace Capstone.Classes
         private string filePath = @"C:\Catering"; // You will likely need to create this folder on your machine
 
         public decimal customerMoney { get; set; } = 0M;
+        string response { get; set; }  = "";
 
         public void AddMoney(decimal moneyToAdd)
         {
@@ -25,7 +26,7 @@ namespace Capstone.Classes
         }
         public bool CanAddMoney (decimal moneyToAdd)
         {
-            if (5000M <= customerMoney + moneyToAdd)
+            if (5000M >= customerMoney + moneyToAdd)
             {
                return true;
             }
@@ -34,6 +35,7 @@ namespace Capstone.Classes
                 return false;
             }
         }
+
         public decimal SpendMoney(decimal costOfPurchase)
         {
             customerMoney -= costOfPurchase;
@@ -71,9 +73,11 @@ namespace Capstone.Classes
             return "";
         }
 
-        public bool EnoughMoney(decimal itemTotal)
+        public bool EnoughMoney(int qtyToPurchase, string itemCode)
         {
-            if(itemTotal > customerMoney)
+            CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
+            decimal total = item.Price * qtyToPurchase;
+            if (total > customerMoney)
             {
                 return false;
             }
@@ -82,21 +86,34 @@ namespace Capstone.Classes
                 return true;
             }
         }
+
         public CateringItem purchaseItems(string itemCode, int qtyToPurchase)
         {
-            
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
-            decimal total =  item.Price * qtyToPurchase;
-            if(EnoughMoney(total))
-            {
-                item.UpdateQuantity(qtyToPurchase);
-                SpendMoney(total);
-            }
-
-
+            decimal total = item.Price * qtyToPurchase;
+            item.UpdateQuantity(qtyToPurchase);
+            SpendMoney(total);
             return item;
         }
-   
-    }
-    
+
+        public bool isCodeValid(string itemCode)
+        {
+            CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
+            if (item == null)
+            {
+                return false;
+            }
+            else return true;
+        }
+
+        public bool isQuantityEnough(string itemCode, int qtyWanted)
+        {
+            CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
+            if (item.Quantity >= qtyWanted)
+            {
+                return true;
+            }
+            else return false;
+        }
+    } 
 }

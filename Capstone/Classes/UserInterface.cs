@@ -27,9 +27,6 @@ namespace Capstone.Classes
                 Console.WriteLine("(3) Quit");
 
                 menuSelection = Console.ReadLine().ToString();
-                
-
-                
 
                 switch (menuSelection)
                 {
@@ -76,9 +73,43 @@ namespace Capstone.Classes
                                     break;
                                 case "2":
                                     Console.WriteLine("Enter the code of the item you would like to purchase");
-                                    string itemCode = Console.ReadLine();
+                                    bool validCode = false;
+                                    string itemCode = "";
+
+                                    while (validCode == false)
+                                    {
+                                        itemCode = Console.ReadLine();
+                                        validCode = catering.isCodeValid(itemCode);
+                                        if (validCode == false)
+                                        {
+                                            Console.WriteLine("Wrong code, please enter a valid code.");
+                                        }
+                                    }
+
                                     Console.WriteLine("Please enter the quantity you would like to purchase");
-                                    int qtyToPurchase = int.Parse(Console.ReadLine());
+                                    int qtyToPurchase = 0;
+                                    bool isInventoryEnough = false;
+                                    bool AreWeAbleToPurchase = false;
+
+                                    while (AreWeAbleToPurchase == false)
+                                    {
+                                        qtyToPurchase = int.Parse(Console.ReadLine());
+                                        isInventoryEnough = catering.isQuantityEnough(itemCode, qtyToPurchase);
+                                        if (isInventoryEnough == false)
+                                        {
+                                            Console.WriteLine("Not enough stock, please reduce quantity.");
+                                        } else if (isInventoryEnough == true)
+                                        {
+                                            AreWeAbleToPurchase = catering.EnoughMoney(qtyToPurchase, itemCode);
+                                            if (AreWeAbleToPurchase == false) 
+                                            {
+                                                Console.WriteLine("Not enough Money, please reduce quantity.");
+                                            } 
+                                        }
+
+                                    }
+
+
 
                                     CateringItem itemPurchased =catering.purchaseItems(itemCode, qtyToPurchase);
 
@@ -100,6 +131,8 @@ namespace Capstone.Classes
                         break;
 
                     case "3":
+                        Console.WriteLine("Thank You For Using Our Service. Goodbye.");
+                        done = !done;
 
                         break;
 

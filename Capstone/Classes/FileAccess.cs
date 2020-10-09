@@ -41,12 +41,12 @@ namespace Capstone.Classes
         public bool shouldAppend = true;
         public string formatTime = DateTime.Now.ToString();
         private string filePathWrite = @"C:\Catering\log.txt";
-        public void fileWriter(string[] purchaseArray)
+        public void fileWriterPurchase(string logString)
         {
-            
             using (StreamWriter writer = new StreamWriter(filePathWrite, shouldAppend))
             {
-                
+                string stringToLog = DateTime.Now.ToString() + " " + logString;
+                writer.WriteLine(stringToLog);
             }
         }
     }

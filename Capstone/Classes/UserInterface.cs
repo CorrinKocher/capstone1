@@ -14,6 +14,7 @@ namespace Capstone.Classes
     {
         public Catering catering = new Catering();
         public FileAccess file = new FileAccess();
+        public PurchaseList purchaseList = new PurchaseList();
         public void RunInterface()
         {
             file.FileReader(catering);
@@ -82,15 +83,15 @@ namespace Capstone.Classes
                                     }
 
                                     CateringItem itemPurchased = catering.purchaseItems(itemCode, qtyToPurchase);
+                                    PurchasedItems pItems = new PurchasedItems(qtyToPurchase, itemPurchased.Price, itemPurchased.Name, itemCode, itemPurchased.Type);
+                                    generatePurchaseString(pItems);
 
-                                    string[] itemArray = { itemCode, qtyToPurchase.ToString(), itemPurchased.Name, itemPurchased.Type, itemPurchased.Price.ToString() };
-                                    arrayList.Add(itemArray);
+                                    purchaseList.addToList(pItems);
 
 
                                     break;
                                 case "3":
-
-
+                                    getCompleteTransaction();
                                     transactionComplete = true;
                                     break;
 
@@ -153,6 +154,21 @@ namespace Capstone.Classes
 
 
             Console.WriteLine(catering.printAllList());
+        }
+        public void getCompleteTransaction()
+        {
+            decimal totalPurchasePrice = 0M;
+            foreach (PurchasedItems item in purchaseList)
+            {
+                Console.WriteLine(item.QtyToPurchase + "   " + item.TypeFull + "   " + item.Name + "   $" + item.Price + "   $" + item.TotalPrice);
+                totalPurchasePrice += item.TotalPrice;
+            }
+            Console.WriteLine("Total: $" + totalPurchasePrice);
+        }
+        public void generatePurchaseString(PurchasedItems item)
+        {
+            string logString = item.QtyToPurchase + "   " + item.Name + "   " + item.Code + "   $" + item.TotalPrice + "   $" + catering.customerMoney;
+            file.fileWriterPurchase(logString);
         }
 
 

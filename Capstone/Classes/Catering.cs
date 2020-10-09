@@ -13,9 +13,32 @@ namespace Capstone.Classes
 
         private string filePath = @"C:\Catering"; // You will likely need to create this folder on your machine
 
-        public List[] purchasedItems = new List[];
+        public decimal customerMoney { get; set; } = 0M;
 
-      
+        public void AddMoney(decimal moneyToAdd)
+        {
+            if (CanAddMoney(moneyToAdd))
+            {
+                customerMoney += moneyToAdd;
+            }
+
+        }
+        public bool CanAddMoney (decimal moneyToAdd)
+        {
+            if (5000M <= customerMoney + moneyToAdd)
+            {
+               return true;
+            }
+            else  
+            {
+                return false;
+            }
+        }
+        public decimal SpendMoney(decimal costOfPurchase)
+        {
+            customerMoney -= costOfPurchase;
+            return customerMoney;
+        }
         public string GetFilePath()
         {
             return filePath;
@@ -47,11 +70,29 @@ namespace Capstone.Classes
             }
             return "";
         }
-        public CateringItem ModifyQuantity(string itemCode, int qtyToPurchase)
+
+        public bool EnoughMoney(decimal itemTotal)
         {
+            if(itemTotal > customerMoney)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public CateringItem purchaseItems(string itemCode, int qtyToPurchase)
+        {
+            
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
-            item.UpdateQuantity(qtyToPurchase); //first or default would also work in place of fine
-            //could also foreach. LINQ provides shortcuts foreachs
+            decimal total =  item.Price * qtyToPurchase;
+            if(EnoughMoney(total))
+            {
+                item.UpdateQuantity(qtyToPurchase);
+                SpendMoney(total);
+            }
+
 
             return item;
         }

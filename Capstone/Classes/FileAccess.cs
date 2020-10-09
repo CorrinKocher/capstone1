@@ -10,8 +10,9 @@ namespace Capstone.Classes
     /// </summary>
     public class FileAccess
     {
+       // public DateTime currentTime = DateTime.Now;
         //public Catering catering;
-        private string filePathRead = @"C:\Users\Student\Catering\cateringsystem.csv";
+        private string filePathRead = @"C:\Catering\cateringsystem.csv";
         public void FileReader(Catering catering)
         { 
             using (StreamReader reader = new StreamReader(filePathRead))
@@ -37,9 +38,10 @@ namespace Capstone.Classes
                 }
             }
         }
-        bool shouldAppend = true;
-        private string filePathWrite = @"C:\Users\Student\Catering\log.txt";
-        public void fileWriter(Catering catering)
+        public bool shouldAppend = true;
+        public string formatTime = DateTime.Now.ToString();
+        private string filePathWrite = @"C:\Catering\log.txt";
+        public void fileWriter(string[] purchaseArray)
         {
             
             using (StreamWriter writer = new StreamWriter(filePathWrite, shouldAppend))

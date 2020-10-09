@@ -64,10 +64,15 @@ namespace Capstone.Classes
                             Console.WriteLine("(1) Add Money");
                             Console.WriteLine("(2) Select Products");
                             Console.WriteLine("(3) Complete Transaction");
+                            Console.WriteLine("Your account balance is $" + catering.customerMoney);
                             purchasingSelection = Console.ReadLine().ToString();
                             switch (purchasingSelection)
                             {
                                 case "1":
+                                    Console.WriteLine("How much money would you like to add?");
+                                    decimal wantToAdd = decimal.Parse(Console.ReadLine());
+                                    catering.AddMoney(wantToAdd);
+
                                     break;
                                 case "2":
                                     Console.WriteLine("Enter the code of the item you would like to purchase");
@@ -75,11 +80,12 @@ namespace Capstone.Classes
                                     Console.WriteLine("Please enter the quantity you would like to purchase");
                                     int qtyToPurchase = int.Parse(Console.ReadLine());
 
-                                    CateringItem itemPurchased =catering.ModifyQuantity(itemCode, qtyToPurchase);
+                                    CateringItem itemPurchased =catering.purchaseItems(itemCode, qtyToPurchase);
 
                                     string[] itemArray = { itemCode, qtyToPurchase.ToString(), itemPurchased.Name, itemPurchased.Type, itemPurchased.Price.ToString()};
                                     arrayList.Add(itemArray);
 
+                                    
                                     break;
                                 case "3":
 
@@ -105,7 +111,12 @@ namespace Capstone.Classes
                 }
             }
 
-
         }
+
+
+            //public static void MaxAmountCanAdd()
+            //{
+            //    Console.WriteLine("You add a maximum amount of $");
+            //}
     }
 }

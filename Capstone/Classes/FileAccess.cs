@@ -11,18 +11,18 @@ namespace Capstone.Classes
     public class FileAccess
     {
         //public Catering catering;
-        private string filePath = @"C:\Users\Student\Catering\cateringsystem.csv";
+        private string filePathRead = @"C:\Users\Student\Catering\cateringsystem.csv";
         public void FileReader(Catering catering)
-        {
-            using (StreamReader reader = new StreamReader(filePath))
+        { 
+            using (StreamReader reader = new StreamReader(filePathRead))
             {
-                int i = 0;
+
                 while (!reader.EndOfStream)
                 {
-                    
+
                     string line = reader.ReadLine();
 
-                    string[] parts = line.Split("|"); 
+                    string[] parts = line.Split("|");
 
                     string code = parts[0];
                     string name = parts[1];
@@ -33,10 +33,23 @@ namespace Capstone.Classes
                     CateringItem item = new CateringItem(code, name, price, type);
 
                     catering.addToList(item);
-                  //  catering.printList(i);
-                    i++;
+
                 }
             }
         }
+        bool shouldAppend = true;
+        private string filePathWrite = @"C:\Users\Student\Catering\log.txt";
+        public void fileWriter(Catering catering)
+        {
+            
+            using (StreamWriter writer = new StreamWriter(filePathWrite, shouldAppend))
+            {
+                
+            }
+        }
     }
+    
+
 }
+
+

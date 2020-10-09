@@ -13,6 +13,8 @@ namespace Capstone.Classes
 
         private string filePath = @"C:\Catering"; // You will likely need to create this folder on your machine
 
+        public List[] purchasedItems = new List[];
+
       
         public string GetFilePath()
         {
@@ -26,18 +28,24 @@ namespace Capstone.Classes
             this.items.Add(item);
         }
 
-        public void printList(int i)
-        {   //NO CONSOLE WRITELINE HERE!!! 
-            Console.WriteLine(this.items[i].ToString());
+        public string printList(int i)
+        {
+            if (i > items.Count-1)
+            {
+                 return null;
+            }
+            return this.items[i].ToString();
             
         }
-        public void printAllList()
+        
+        public string printAllList()
         {
             foreach  (CateringItem item in items)
             {
-                //NO CONSOLE WRITELINE HERE!!! 
-                Console.WriteLine(item.ToString());
+                
+                return item.ToString();
             }
+            return "";
         }
         public void ModifyQuantity(string itemCode, int qtyToPurchase)
         {

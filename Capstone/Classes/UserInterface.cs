@@ -34,11 +34,29 @@ namespace Capstone.Classes
                 switch (menuSelection)
                 {
                     case "1":
-                        catering.printAllList();
+                        bool needList = true;
+                        int i = 0;
+                        while (needList)
+                        {
+                            string printOut = catering.printList(i);
+                            if (printOut == null)
+                            {
+                                needList = false;
+                            }
+                            i++;
+                            Console.WriteLine(printOut);
+                            
+                        }
+
+                        
+
+                        
+                        Console.WriteLine(catering.printAllList());
 
                         break;
 
                     case "2":
+                        
                         Console.WriteLine("(1) Add Money");
                         Console.WriteLine("(2) Select Products");
                         Console.WriteLine("(3) Complete Transaction");

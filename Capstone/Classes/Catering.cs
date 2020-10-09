@@ -47,14 +47,13 @@ namespace Capstone.Classes
             }
             return "";
         }
-        public void ModifyQuantity(string itemCode, int qtyToPurchase)
+        public CateringItem ModifyQuantity(string itemCode, int qtyToPurchase)
         {
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
-            //this.items.Find(x => x.Quantity.Subtract(qtyToPurchase));
             item.UpdateQuantity(qtyToPurchase); //first or default would also work in place of fine
             //could also foreach. LINQ provides shortcuts foreachs
 
-
+            return item;
         }
    
     }

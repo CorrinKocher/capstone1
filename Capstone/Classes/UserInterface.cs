@@ -56,27 +56,40 @@ namespace Capstone.Classes
                         break;
 
                     case "2":
-                        
-                        Console.WriteLine("(1) Add Money");
-                        Console.WriteLine("(2) Select Products");
-                        Console.WriteLine("(3) Complete Transaction");
-                        string purchasingSelection = Console.ReadLine().ToString();
-                        switch (purchasingSelection)
+                        List<Array> arrayList = new List<Array>();
+                        bool transactionComplete = false;
+                        string purchasingSelection = "";
+                        while (!transactionComplete)
                         {
-                            case "1":
-                                break;
-                            case "2":
-                                Console.WriteLine("Enter the code of the item you would like to purchase");
-                                string itemCode = Console.ReadLine();
-                                Console.WriteLine("Please enter the quantity you would like to purchase");
-                                int qtyToPurchase = int.Parse(Console.ReadLine());
-                                catering.ModifyQuantity(itemCode, qtyToPurchase);
-                                break;
-                            case "3":
-                                break;
+                            Console.WriteLine("(1) Add Money");
+                            Console.WriteLine("(2) Select Products");
+                            Console.WriteLine("(3) Complete Transaction");
+                            purchasingSelection = Console.ReadLine().ToString();
+                            switch (purchasingSelection)
+                            {
+                                case "1":
+                                    break;
+                                case "2":
+                                    Console.WriteLine("Enter the code of the item you would like to purchase");
+                                    string itemCode = Console.ReadLine();
+                                    Console.WriteLine("Please enter the quantity you would like to purchase");
+                                    int qtyToPurchase = int.Parse(Console.ReadLine());
 
-                            default:
-                                break;
+                                    CateringItem itemPurchased =catering.ModifyQuantity(itemCode, qtyToPurchase);
+
+                                    string[] itemArray = { itemCode, qtyToPurchase.ToString(), itemPurchased.Name, itemPurchased.Type, itemPurchased.Price.ToString()};
+                                    arrayList.Add(itemArray);
+
+                                    break;
+                                case "3":
+
+
+                                    transactionComplete = true;
+                                    break;
+
+                                default:
+                                    break;
+                            }
                         }
                         break;
 

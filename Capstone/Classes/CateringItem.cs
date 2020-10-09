@@ -17,7 +17,7 @@ namespace Capstone.Classes
             this.Type = type;
         }
 
-        public int Quantity  {get; set;} = 50;
+        public int Quantity  { get; set; } = 50;
         public string Code { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
@@ -37,6 +37,14 @@ namespace Capstone.Classes
             
             //Console.WriteLine(this.Quantity);
         }
+        //public int getQuantity()
+        //{
+        //    return this.Quantity;
+        //}
+        //public int getQuantity()
+        //{
+        //    return this.Quantity;
+        //}
 
     }
 }

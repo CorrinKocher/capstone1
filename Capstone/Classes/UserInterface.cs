@@ -31,24 +31,7 @@ namespace Capstone.Classes
                 switch (menuSelection)
                 {
                     case "1":
-                        bool needList = true;
-                        int i = 0;
-                        while (needList)
-                        {
-                            string printOut = catering.printList(i);
-                            if (printOut == null)
-                            {
-                                needList = false;
-                            }
-                            i++;
-                            Console.WriteLine(printOut);
-                            
-                        }
-
-                        
-
-                        
-                        Console.WriteLine(catering.printAllList());
+                        PrintList();
 
                         break;
 
@@ -72,19 +55,7 @@ namespace Capstone.Classes
 
                                     break;
                                 case "2":
-                                    Console.WriteLine("Enter the code of the item you would like to purchase");
-                                    bool validCode = false;
-                                    string itemCode = "";
-
-                                    while (validCode == false)
-                                    {
-                                        itemCode = Console.ReadLine();
-                                        validCode = catering.isCodeValid(itemCode);
-                                        if (validCode == false)
-                                        {
-                                            Console.WriteLine("Wrong code, please enter a valid code.");
-                                        }
-                                    }
+                                    string itemCode = GetItemCode();
 
                                     Console.WriteLine("Please enter the quantity you would like to purchase");
                                     int qtyToPurchase = 0;
@@ -98,25 +69,24 @@ namespace Capstone.Classes
                                         if (isInventoryEnough == false)
                                         {
                                             Console.WriteLine("Not enough stock, please reduce quantity.");
-                                        } else if (isInventoryEnough == true)
+                                        }
+                                        else if (isInventoryEnough == true)
                                         {
                                             AreWeAbleToPurchase = catering.EnoughMoney(qtyToPurchase, itemCode);
-                                            if (AreWeAbleToPurchase == false) 
+                                            if (AreWeAbleToPurchase == false)
                                             {
                                                 Console.WriteLine("Not enough Money, please reduce quantity.");
-                                            } 
+                                            }
                                         }
 
                                     }
 
+                                    CateringItem itemPurchased = catering.purchaseItems(itemCode, qtyToPurchase);
 
-
-                                    CateringItem itemPurchased =catering.purchaseItems(itemCode, qtyToPurchase);
-
-                                    string[] itemArray = { itemCode, qtyToPurchase.ToString(), itemPurchased.Name, itemPurchased.Type, itemPurchased.Price.ToString()};
+                                    string[] itemArray = { itemCode, qtyToPurchase.ToString(), itemPurchased.Name, itemPurchased.Type, itemPurchased.Price.ToString() };
                                     arrayList.Add(itemArray);
 
-                                    
+
                                     break;
                                 case "3":
 
@@ -146,10 +116,49 @@ namespace Capstone.Classes
 
         }
 
+        private string GetItemCode()
+        {
+            Console.WriteLine("Enter the code of the item you would like to purchase");
+            bool validCode = false;
+            string itemCode = "";
 
-            //public static void MaxAmountCanAdd()
-            //{
-            //    Console.WriteLine("You add a maximum amount of $");
-            //}
+            while (validCode == false)
+            {
+                itemCode = Console.ReadLine();
+                validCode = catering.isCodeValid(itemCode);
+                if (validCode == false)
+                {
+                    Console.WriteLine("Wrong code, please enter a valid code.");
+                }
+            }
+
+            return itemCode;
+        }
+
+        private void PrintList()
+        {
+            bool needList = true;
+            int i = 0;
+            while (needList) //NO CONSOLE WRITELINE
+            {
+                string printOut = catering.printList(i);
+                if (printOut == null)
+                {
+                    needList = false;
+                }
+                i++;
+                Console.WriteLine(printOut);
+
+            }
+
+
+            Console.WriteLine(catering.printAllList());
+        }
+
+
+        //public static void MaxAmountCanAdd()
+        //{
+        //    Console.WriteLine("You add a maximum amount of $");
+        //}
     }
 }

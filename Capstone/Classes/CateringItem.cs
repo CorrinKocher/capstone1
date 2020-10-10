@@ -30,7 +30,7 @@ namespace Capstone.Classes
             return this.Code + "|" + this.Name + "|" + this.Price.ToString() + "|" + this.Quantity.ToString() + "|" + this.Type;
         }
 
-        //updates the quantit of the item
+        //updates the quantity of the item
         public void UpdateQuantity(int amtSold)
         {
             if(Quantity > 0 && amtSold <= Quantity)

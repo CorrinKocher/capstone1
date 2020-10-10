@@ -64,9 +64,18 @@ namespace Capstone.Classes
                                     //set up variable for money
                                     decimal wantToAdd = decimal.Parse(Console.ReadLine());
                                     //add the money throught the AddMoney method
-                                    catering.AddMoney(wantToAdd);
-                                    // add a log to log.txt with the money and balance
-                                    generateAddMoneyString(wantToAdd);
+                                    bool isMoneyValid = catering.AddMoney(wantToAdd);
+                                    if(isMoneyValid)
+                                    {
+                                        // add a log to log.txt with the money and balance
+                                        generateAddMoneyString(wantToAdd);
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Account Balance cannot exceed $5000");
+                                    }
+
+                                    
 
                                     break;
 

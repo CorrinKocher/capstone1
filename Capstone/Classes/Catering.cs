@@ -25,19 +25,26 @@ namespace Capstone.Classes
 
         public decimal customerMoney { get; set; } = 0M;
 
+
         //method for adding money, checks if money can be added first
-        public void AddMoney(decimal moneyToAdd)
+        public bool AddMoney(decimal moneyToAdd)
         {
             if (CanAddMoney(moneyToAdd))
             {
                 customerMoney += moneyToAdd;
+                return true;
             }
+            else
+            {
+                return false;
+            }
+                
 
         }
         //checks if money can be added
         public bool CanAddMoney (decimal moneyToAdd)
         {
-            if (5000M >= customerMoney + moneyToAdd)
+            if (5000M >= customerMoney + moneyToAdd && moneyToAdd > 0)
             {
                return true;
             }
@@ -50,7 +57,11 @@ namespace Capstone.Classes
         //spends that money
         public decimal SpendMoney(decimal costOfPurchase)
         {
-            customerMoney -= costOfPurchase;
+            if(costOfPurchase > 0)
+            {
+                customerMoney -= costOfPurchase;
+                return customerMoney;
+            }
             return customerMoney;
         }
         //get file path
@@ -113,8 +124,7 @@ namespace Capstone.Classes
         {
             //gets our item by the code given
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
-
-            if (item.Quantity >= qtyWanted)
+            if (item.Quantity >= qtyWanted && qtyWanted > 0)
             {
                 return true;
             }

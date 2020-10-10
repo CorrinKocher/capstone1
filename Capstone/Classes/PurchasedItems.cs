@@ -35,16 +35,16 @@ namespace Capstone.Classes
                 {
                     case "A":
                         return "Appetizer";
-                        break;
+                        
                     case "B":
                         return "Beverage";
-                        break;
+                       
                     case "E":
                         return "Entree";
-                        break;
+                        
                     case "D":
                         return "Dessert";
-                        break;
+                        
 
                     default:
                         return Type;

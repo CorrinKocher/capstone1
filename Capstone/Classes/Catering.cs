@@ -9,10 +9,12 @@ namespace Capstone.Classes
     /// </summary>
     public class Catering
     {
+        //original list of catering items
         private List<CateringItem> items = new List<CateringItem>();
+        //file path
+        private string filePath = @"C:\Catering";
 
-        private string filePath = @"C:\Catering"; // You will likely need to create this folder on your machine
-
+        //displays all items inside items
         public List<CateringItem> AllItem
         {
             get
@@ -20,9 +22,10 @@ namespace Capstone.Classes
                 return this.items;
             }
         }
-        public decimal customerMoney { get; set; } = 0M;
-        string response { get; set; }  = "";
 
+        public decimal customerMoney { get; set; } = 0M;
+
+        //method for adding money, checks if money can be added first
         public void AddMoney(decimal moneyToAdd)
         {
             if (CanAddMoney(moneyToAdd))
@@ -31,6 +34,7 @@ namespace Capstone.Classes
             }
 
         }
+        //checks if money can be added
         public bool CanAddMoney (decimal moneyToAdd)
         {
             if (5000M >= customerMoney + moneyToAdd)
@@ -43,27 +47,31 @@ namespace Capstone.Classes
             }
         }
 
+        //spends that money
         public decimal SpendMoney(decimal costOfPurchase)
         {
             customerMoney -= costOfPurchase;
             return customerMoney;
         }
+        //get file path
         public string GetFilePath()
         {
             return filePath;
         }
         
-
+        //adds an item to our items list
         public void addToList(CateringItem item)
         {
 
             this.items.Add(item);
         }
 
-
+        // checks to see if we have enough money to purchase a given quantity of an item
         public bool EnoughMoney(int qtyToPurchase, string itemCode)
         {
+            //gets our item by the code given
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
+            //gets the final price
             decimal total = item.Price * qtyToPurchase;
             if (total > customerMoney)
             {
@@ -75,17 +83,24 @@ namespace Capstone.Classes
             }
         }
 
+        //this does the actual purchase of items
         public CateringItem purchaseItems(string itemCode, int qtyToPurchase)
         {
+            //gets our item by the code given
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
+            //final price
             decimal total = item.Price * qtyToPurchase;
+            //updates quantity
             item.UpdateQuantity(qtyToPurchase);
+            //spends the money and updates balance
             SpendMoney(total);
             return item;
         }
 
+        // checks if the code user inputs is valid item
         public bool isCodeValid(string itemCode)
         {
+            //gets our item by the code given if there, if invalid returns null
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
             if (item == null)
             {
@@ -93,18 +108,23 @@ namespace Capstone.Classes
             }
             else return true;
         }
-
+        // checks that there is enough of an item in stock
         public bool isQuantityEnough(string itemCode, int qtyWanted)
         {
+            //gets our item by the code given
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
+
             if (item.Quantity >= qtyWanted)
             {
                 return true;
             }
             else return false;
         }
+
+        // checks if an item is sold out
         public bool IsSoldOut (string itemCode)
         {
+            //gets our item by the code given
             CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
             if (item.Quantity == 0)
             {
@@ -116,6 +136,7 @@ namespace Capstone.Classes
             }
         }
 
+        //returns the change and counts up the bills
         public string ReturnChange()
         {
             int amtOfTwenties = (int)customerMoney / 20;

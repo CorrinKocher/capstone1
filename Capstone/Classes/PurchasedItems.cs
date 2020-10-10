@@ -9,6 +9,7 @@ namespace Capstone.Classes
     /// </summary>
     public class PurchasedItems
     {
+        //set up purchased item constructor
         public PurchasedItems(int qtyToPurchase, decimal price, string name, string code, string type)
         {
 
@@ -20,11 +21,13 @@ namespace Capstone.Classes
             this.TotalPrice = qtyToPurchase * price;
 
         }
+        public decimal TotalPrice  { get; set; }
         public int QtyToPurchase { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Type { get; set; }
+        //turns the single characted type (i.e. "B", "A", etc.) into the full string
         public string TypeFull {
             get
             {
@@ -47,8 +50,7 @@ namespace Capstone.Classes
                         return Type;
                 }
             }
-         }
-        public decimal TotalPrice  { get; set; }
 
+         }
     }
 }

@@ -43,15 +43,18 @@ namespace Capstone.Classes
                         break;
 
                     case "2":
+                        //set up a few conditions
                         bool transactionComplete = false;
                         string purchasingSelection = "";
+
+                        //go into loop
                         while (!transactionComplete)
                         {
-                            Console.WriteLine("(1) Add Money");
-                            Console.WriteLine("(2) Select Products");
-                            Console.WriteLine("(3) Complete Transaction");
-                            Console.WriteLine("Your account balance is $" + catering.customerMoney);
+                            //display purchasing menu
+                            ShowPurchasingMenu();
+                            //take in user choice input
                             purchasingSelection = Console.ReadLine().ToString();
+
                             switch (purchasingSelection)
                             {
                                 //Add that moola(money)
@@ -67,6 +70,7 @@ namespace Capstone.Classes
 
                                     break;
 
+                                //select items for purchase
                                 case "2":
                                     //prompt for code
                                     Console.WriteLine("Enter the code of the item you would like to purchase");
@@ -123,10 +127,15 @@ namespace Capstone.Classes
 
                                     break;
 
+                                //finish transaction, exit loop and return to main menu
                                 case "3":
+                                    //loop through all items in purchaseList and add totalprice up, then log out to customer
                                     getCompleteTransaction();
+                                    //give customer their change
                                     Console.WriteLine(catering.ReturnChange());
+                                    //log out to log.txt
                                     generateGiveChangeString();
+                                    //transactionComplete == true exits the loop and returns to the main menu
                                     transactionComplete = true;
                                     break;
 
@@ -136,6 +145,7 @@ namespace Capstone.Classes
                         }
                         break;
 
+                    //exit the loop
                     case "3":
                         Console.WriteLine("Thank You For Using Our Service. Goodbye.");
                         done = !done;
@@ -152,6 +162,7 @@ namespace Capstone.Classes
 
         }
 
+        //this is the main menu
         private static void ShowMainMenu()
         {
             Console.WriteLine("Please select from the following options");
@@ -160,6 +171,16 @@ namespace Capstone.Classes
             Console.WriteLine("(3) Quit");
         }
 
+        //this is the purchasing menu, also displays current balance
+        private void ShowPurchasingMenu()
+        {
+            Console.WriteLine("(1) Add Money");
+            Console.WriteLine("(2) Select Products");
+            Console.WriteLine("(3) Complete Transaction");
+            Console.WriteLine("Your account balance is $" + catering.customerMoney);
+        }
+
+        //lists out full catering items
         private void RetrievePrintList()
         {
             //loop through our list of catering items and log them out
@@ -171,9 +192,11 @@ namespace Capstone.Classes
             Console.WriteLine("");
         }
 
+        //shows customer full list of items purchased and total
         public void getCompleteTransaction()
         {
             decimal totalPurchasePrice = 0M;
+            //loop through all items in purchaseList and add totalprice up, then log out to customer
             foreach (PurchasedItems item in purchaseList)
             {
                 Console.WriteLine(item.QtyToPurchase + "   " + item.TypeFull + "   " + item.Name + "   $" + item.Price + "   $" + item.TotalPrice);
@@ -185,19 +208,21 @@ namespace Capstone.Classes
 
 
 
-
+        // sets up a string to log into log.txt
         public void generatePurchaseString(PurchasedItems item)
         {
             string logString = item.QtyToPurchase + "   " + item.Name + "   " + item.Code + "   $" + item.TotalPrice + "   $" + catering.customerMoney;
             file.fileWriterPurchase(logString);
         }
 
+        // sets up a string to log into log.txt
         public void generateAddMoneyString(decimal moneyToAdd)
         {
             string logString = "ADD MONEY: " + "   $" + moneyToAdd + ".00   $" + catering.customerMoney;
             file.fileWriterPurchase(logString);
         }
 
+        // sets up a string to log into log.txt, this also sets the customerMoney to 0, since we have at this point returned their money
         public void generateGiveChangeString()
         {
             string logString = "GIVE CHANGE: " + "   $" + catering.customerMoney + "   $" + "0.00";

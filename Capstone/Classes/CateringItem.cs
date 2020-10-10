@@ -24,10 +24,13 @@ namespace Capstone.Classes
         public string Type { get; set; }
         public bool soldOut { get; set; } = false;
 
+        //to string method
         public override string ToString()
         {
             return this.Code + "|" + this.Name + "|" + this.Price.ToString() + "|" + this.Quantity.ToString() + "|" + this.Type;
         }
+
+        //updates the quantit of the item
         public void UpdateQuantity(int amtSold)
         {
             if(Quantity > 0 && amtSold <= Quantity)

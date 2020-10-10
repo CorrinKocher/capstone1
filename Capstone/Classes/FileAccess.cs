@@ -10,8 +10,7 @@ namespace Capstone.Classes
     /// </summary>
     public class FileAccess
     {
-       // public DateTime currentTime = DateTime.Now;
-        //public Catering catering;
+        //path for reading n the menu
         private string filePathRead = @"C:\Catering\cateringsystem.csv";
         public void FileReader(Catering catering)
         { 
@@ -30,22 +29,28 @@ namespace Capstone.Classes
                     decimal price = decimal.Parse(parts[2]);
                     string type = parts[3];
 
-
+                    // make a catering item out of the strings we pulled out from file
                     CateringItem item = new CateringItem(code, name, price, type);
 
+                    //add the item to our list of catering items
                     catering.addToList(item);
 
                 }
             }
         }
+
+        //some variable set up
         public bool shouldAppend = true;
-        public string formatTime = DateTime.Now.ToString();
         private string filePathWrite = @"C:\Catering\log.txt";
+
+        //logs strings out to our log.txt file
         public void fileWriterPurchase(string logString)
         {
             using (StreamWriter writer = new StreamWriter(filePathWrite, shouldAppend))
             {
+                //adds the time to the beginning of a given string
                 string stringToLog = DateTime.Now.ToString() + " " + logString;
+
                 writer.WriteLine(stringToLog);
             }
         }

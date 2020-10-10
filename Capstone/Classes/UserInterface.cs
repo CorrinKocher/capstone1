@@ -15,6 +15,7 @@ namespace Capstone.Classes
         public Catering catering = new Catering();
         public FileAccess file = new FileAccess();
         public PurchaseList purchaseList = new PurchaseList();
+        
         public void RunInterface()
         {
             file.FileReader(catering);
@@ -32,7 +33,7 @@ namespace Capstone.Classes
                 switch (menuSelection)
                 {
                     case "1":
-                        PrintList();
+                        RetrievePrintList();
 
                         break;
 
@@ -62,10 +63,15 @@ namespace Capstone.Classes
                                     int qtyToPurchase = 0;
                                     bool isInventoryEnough = false;
                                     bool AreWeAbleToPurchase = false;
-
+                                    //undo the while loops
                                     while (AreWeAbleToPurchase == false)
                                     {
                                         qtyToPurchase = int.Parse(Console.ReadLine());
+                                        if(catering.IsSoldOut(itemCode))
+                                        {
+                                            Console.WriteLine("This item is Sold Out.");
+                                            break;
+                                        }
                                         isInventoryEnough = catering.isQuantityEnough(itemCode, qtyToPurchase);
                                         if (isInventoryEnough == false)
                                         {
@@ -92,6 +98,7 @@ namespace Capstone.Classes
                                     break;
                                 case "3":
                                     getCompleteTransaction();
+                                    Console.WriteLine(catering.ReturnChange());
                                     transactionComplete = true;
                                     break;
 
@@ -136,24 +143,15 @@ namespace Capstone.Classes
             return itemCode;
         }
 
-        private void PrintList()
+        private void RetrievePrintList()
         {
-            bool needList = true;
-            int i = 0;
-            while (needList) //NO CONSOLE WRITELINE
+            
+            
+            foreach (CateringItem item in this.catering.AllItem)
             {
-                string printOut = catering.printList(i);
-                if (printOut == null)
-                {
-                    needList = false;
-                }
-                i++;
-                Console.WriteLine(printOut);
-
+                Console.WriteLine(item);
             }
-
-
-            Console.WriteLine(catering.printAllList());
+            
         }
         public void getCompleteTransaction()
         {

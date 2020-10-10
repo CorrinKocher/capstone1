@@ -13,6 +13,13 @@ namespace Capstone.Classes
 
         private string filePath = @"C:\Catering"; // You will likely need to create this folder on your machine
 
+        public List<CateringItem> AllItem
+        {
+            get
+            {
+                return this.items;
+            }
+        }
         public decimal customerMoney { get; set; } = 0M;
         string response { get; set; }  = "";
 
@@ -53,25 +60,6 @@ namespace Capstone.Classes
             this.items.Add(item);
         }
 
-        public string printList(int i)
-        {
-            if (i > items.Count-1)
-            {
-                 return null;
-            }
-            return this.items[i].ToString();
-            
-        }
-        
-        public string printAllList()
-        {
-            foreach  (CateringItem item in items)
-            {
-                
-                return item.ToString();
-            }
-            return "";
-        }
 
         public bool EnoughMoney(int qtyToPurchase, string itemCode)
         {
@@ -115,6 +103,46 @@ namespace Capstone.Classes
             }
             else return false;
         }
+        public bool IsSoldOut (string itemCode)
+        {
+            CateringItem item = this.items.Find(x => x.Code.Contains(itemCode));
+            if (item.Quantity == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public string ReturnChange()
+        {
+            int amtOfTwenties = (int)customerMoney / 20;
+            Decimal remainingBalance = customerMoney % 20;
+
+            int amtOfTens = (int)remainingBalance / 10;
+            remainingBalance = (remainingBalance % 10);
+
+            int amtOfFives = (int)remainingBalance / 5;
+            remainingBalance = (remainingBalance % 5);
+
+            int amtOfOnes = (int)remainingBalance / 1;
+            remainingBalance = (remainingBalance % 1M);
+           
+            int amtOfQuarters = ((int)(remainingBalance * 100)) / 25;
+            remainingBalance =(remainingBalance % 0.25M);
+            
+            int amtOfDimes = ((int)(remainingBalance * 100)) / 10;
+            remainingBalance = (remainingBalance % .10M);
+
+            int amtOfNickles = ((int)(remainingBalance * 100)) / 5;
+            remainingBalance = (remainingBalance % .05M);
+
+            string changeDueToCustomer = amtOfTwenties + " twenties, " + amtOfTens + " tens, " + amtOfFives + " fives, " + amtOfOnes + " ones " + amtOfQuarters + " quarters, " + amtOfDimes + " dimes and " + amtOfNickles + " nickles";
+            return changeDueToCustomer;
+        }
+       
        
     } 
 }

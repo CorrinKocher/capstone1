@@ -35,16 +35,9 @@ namespace Capstone.Classes
                 Quantity -= amtSold;
             }
             
-            //Console.WriteLine(this.Quantity);
+            
         }
-        //public int getQuantity()
-        //{
-        //    return this.Quantity;
-        //}
-        //public int getQuantity()
-        //{
-        //    return this.Quantity;
-        //}
+        
 
     }
 }
